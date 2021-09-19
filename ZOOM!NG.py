@@ -1,3 +1,17 @@
+"""
+ZOOM!NG is used for scheduling zoom meetings.
+Copyright (C) 2021  Akshat Chauhan
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+"""
 import jwt 
 import requests
 import json
@@ -8,7 +22,7 @@ import csv
 from colorama import Fore
 from time import time 
 
-zooming_folder = f"{os.path.expanduser('~')}/.Zooming"
+zooming_folder = f"{os.path.expanduser('~')}/.ZOOM!NG"
 zoom_json = open(f"{zooming_folder}/zoom_data.json").read()
 zoom_data = json.loads(zoom_json)
 KEY = zoom_data["KEY"]
@@ -105,6 +119,16 @@ def from_term(args):
     scheduleMeeting(meeting_settings)
 
 def main(args):
+    print("""
+    
+  ____  ____  ____  __  ______  _______
+ /_  / / __ \/ __ \/  |/  / / |/ / ___/
+  / /_/ /_/ / /_/ / /|_/ /_/    / (_ / 
+ /___/\____/\____/_/  /_(_)_/|_/\___/  
+                                       
+                                       
+""")
+    print()
     if args.fromcsv:
         from_csv()
     else:
@@ -112,7 +136,7 @@ def main(args):
         
     
 if __name__ == "__main__":
-    parse = argparse.ArgumentParser(description="Schedule zoom meetings using Zooming")
+    parse = argparse.ArgumentParser(description="Schedule zoom meetings using ZOOM!NG")
     parse.add_argument('-csv','--fromcsv',help="Read csv file and schedule all meetings specified",action='store_true')
     parse.add_argument('-st',"--starttime",help="Set start time for meeting")
     parse.add_argument('-d','--duration',help="Set duration for meeting ,default is 40 mins",type=int)
