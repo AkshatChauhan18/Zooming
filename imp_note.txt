@@ -1,0 +1,3 @@
+This is important.
+Python module import in ZOOM!NG.py is 'pyjwt' not 'jwt', both are different packages.
+Installing jwt module will cause errors.

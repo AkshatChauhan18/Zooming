@@ -1,5 +1,5 @@
 """
-ZOOM!NG is used for scheduling zoom meetings.
+ZOOM!NG is used for scheduling zoom meetings from terminal >_ .
 Copyright (C) 2021  Akshat Chauhan
 
 This program is free software: you can redistribute it and/or modify
@@ -12,16 +12,19 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 """
-import jwt 
+import jwt
 import requests
 import json
 import argparse
 import sys
 import os
 import csv
-from colorama import Fore
-from time import time 
+from version import ver
+from time import time ,sleep 
+from rich.console import Console
+from rich.markdown import Markdown
 
+console = Console()
 zooming_folder = f"{os.path.expanduser('~')}/.ZOOM!NG"
 zoom_json = open(f"{zooming_folder}/zoom_data.json").read()
 zoom_data = json.loads(zoom_json)
@@ -45,9 +48,22 @@ def scheduleMeeting(meetingsettings):
                 f'https://api.zoom.us/v2/users/me/meetings', 
             headers=headers, data=json.dumps(meetingsettings))    
             res = r.json()
-            print(res)
+            final_data = (
+            "# Its a zoom meet !\n"
+            "\n"
+            f"## The topic is {res['topic']}\n"
+            "\n"
+            f"### Link: {res['join_url']}\n"
+            "\n"
+            f"### **Meeting ID** : ```{res['id']}```\n"
+            "\n"
+            f"### **Meeting Password** : ```{res['password']}```")
+            markdown = Markdown(final_data)
+            console.print(markdown)
             print()
+
         except Exception as e:
+            print(res)
             print(e) 
             print()   
 
@@ -62,7 +78,7 @@ def generateToken():
 def from_csv():
     csv_file = open(f"{zooming_folder}/meetings.csv")
     csv_reader = csv.DictReader(csv_file)
-    print(Fore.CYAN+"Scheduling all of your meetings."+Fore.WHITE)  
+    console.print("[cyan]Scheduling all of your meetings.[/cyan][white]")  
     for data in csv_reader:
         topic = data["Topic"]
         starttime = data["Start Time"]
@@ -72,7 +88,7 @@ def from_csv():
         password = None if data["Password"] == "" else data["Password"]
         settings =  settings_json if args.jsonsettings else default_settings
         if starttime == "":
-            print(Fore.RED+"Your CSV does not have start time."+Fore.WHITE)
+            console.print("[red]Your CSV does not have start time.[/red][white]")
             sys.exit()
         meeting_settings =  {"topic": topic,
                     "type": 2,
@@ -83,7 +99,7 @@ def from_csv():
                     "password":password,
                     "settings": settings
                     }  
-        print(Fore.GREEN+f"Scheduling meeting of topic: {topic}"+Fore.WHITE)                          
+        console.print(f"[green]Scheduling meeting of topic: {topic} [/green][white]")                          
         scheduleMeeting(meeting_settings)            
 
 def from_term(args):
@@ -97,7 +113,7 @@ def from_term(args):
     if not args.duration:duration = 40
     if args.starttime:starttime = args.starttime
     if not  args.starttime:
-        print(Fore.RED+'Please specify start time'+Fore.WHITE) 
+        console.print('[red]Please specify start time[/red][white]') 
         sys.exit()
     if args.timezone:timezone = args.timezone
     if not args.timezone:timezone = ''
@@ -115,7 +131,7 @@ def from_term(args):
                     }
     
     
-    print(Fore.GREEN+f"Scheduling meeting of topic: {topic}"+Fore.WHITE)
+    console.print(f"[green]Scheduling meeting of topic: {topic} [/green][white]")
     scheduleMeeting(meeting_settings)
 
 def main(args):
@@ -124,10 +140,11 @@ def main(args):
   ____  ____  ____  __  ______  _______
  /_  / / __ \/ __ \/  |/  / / |/ / ___/
   / /_/ /_/ / /_/ / /|_/ /_/    / (_ / 
- /___/\____/\____/_/  /_(_)_/|_/\___/  
-                                       
-                                       
+ /___/\____/\____/_/  /_(_)_/|_/\___/ 
+
 """)
+    console.print(f"Version [yellow]{ver}[/yellow][white]")
+    sleep(1)
     print()
     if args.fromcsv:
         from_csv()
@@ -144,7 +161,7 @@ if __name__ == "__main__":
     parse.add_argument('-a','--agenda',help='Set agenda for meeting')
     parse.add_argument('-p','--password',help='Set password for meeting , should not have white space')
     parse.add_argument('-tz','--timezone',help='Set time zone for meeting')
-    parse.add_argument('-jse','--jsonsettings',help=("""Set settings for meeting (json), else use default settings.The default settings are :,
+    parse.add_argument('-jse','--jsonsettings',help=("""Set settings for meeting using zoom_data.json, else use default settings.The default settings are :,
                                 "host_video: true",
                                 "participant_video: true",
                                 "join_before_host: false",
@@ -155,4 +172,3 @@ if __name__ == "__main__":
 
     args = parse.parse_args()
     main(args)
-    

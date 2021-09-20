@@ -6,9 +6,10 @@ name = "pypi"
 [packages]
 colorama = "*"
 argparse = "*"
-jwt = "*"
 requests = "*"
 pyinstaller = "*"
+pyjwt = "*"
+rich = "*"
 
 [dev-packages]
 
