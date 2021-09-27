@@ -21,7 +21,6 @@ import argparse
 import sys
 import os
 import csv
-from version import ver
 from time import time ,sleep 
 from rich.console import Console
 from rich.markdown import Markdown
