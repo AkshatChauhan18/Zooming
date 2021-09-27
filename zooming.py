@@ -27,6 +27,7 @@ from rich.console import Console
 from rich.markdown import Markdown
 
 console = Console()
+ver = "0.0.1"
 zooming_folder = f"{os.path.expanduser('~')}/.ZOOM!NG"
 zoom_json = open(f"{zooming_folder}/zoom_data.json").read()
 zoom_data = json.loads(zoom_json)
