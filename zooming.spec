@@ -19,7 +19,7 @@ a = Analysis(['zooming.py'],
              noarchive=False)
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
-
+sjksjhsjjjjjd
 exe = EXE(pyz,
           a.scripts,
           a.binaries,
