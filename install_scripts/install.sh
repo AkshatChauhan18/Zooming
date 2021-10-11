@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# This is install script of ZOOM!NG
+# Made by Akshat Chauhan
+
 function check_zooming_folder(){
     if [[ -d "$HOME/.ZOOM!NG" ]]; then
         echo
