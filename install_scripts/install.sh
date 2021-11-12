@@ -6,7 +6,7 @@
 function check_zooming_folder(){
     if [[ -d "$HOME/.ZOOM!NG" ]]; then
         echo
-        echo "'$HOME/.ZOOM!NG exists', do you want to delete all data and make new settings.json and meetings.csv [yes/no]" 
+        echo "'$HOME/.ZOOM!NG exists', do you want to delete all data and make new settings.json and meetings.csv [yes/no]"
         read -r answer
         if [[ $answer == "yes"  ]]; then
             echo "Downloading meetings.csv"
@@ -15,7 +15,7 @@ function check_zooming_folder(){
             echo "Downloading zoom_data.json"
             echo $zoom_data >> "zoom_data.json"
             echo
-        elif [[ $answer == "no" ]];then
+            elif [[ $answer == "no" ]];then
             echo "OK!"
         else
             check_zooming_folder
@@ -37,13 +37,13 @@ zoom_data='
     "KEY": "your key",
     "SECRET": "your secrete",
     "settings": {
-      "host_video": "true",
-      "participant_video": "true",
-      "join_before_host": "false",
-      "mute_upon_entry": "false",
-      "audio": "voip",
-      "auto_recording": "false",
-      "waiting_room": "true"
+        "host_video": "true",
+        "participant_video": "true",
+        "join_before_host": "false",
+        "mute_upon_entry": "false",
+        "audio": "voip",
+        "auto_recording": "false",
+        "waiting_room": "true"
     }
 }
 '
