@@ -10,10 +10,10 @@ function check_zooming_folder(){
         read -r answer
         if [[ $answer == "yes"  ]]; then
             echo "Downloading meetings.csv"
-            sudo curl -o "$HOME/.ZOOM!NG/meetings.csv" $csv_url
+            echo $csv_data >> "meetings.csv"
             echo
             echo "Downloading zoom_data.json"
-            sudo curl -o "$HOME/.ZOOM!NG/meetings.csv" $zoom_data_url
+            echo $zoom_data >> "zoom_data.json"
             echo
         elif [[ $answer == "no" ]];then
             echo "OK!"
@@ -24,13 +24,29 @@ function check_zooming_folder(){
         echo "creating .ZOOM!NG folder"
         mkdir "$HOME/.ZOOM!NG"
         echo "Downloading meetings.csv"
-        sudo curl -o "$HOME/.ZOOM!NG/meetings.csv" $csv_url
+        echo $csv_data >> "meetings.csv"
+        echo
         echo "Downloading zoom_data.json"
-        sudo curl -o "$HOME/.ZOOM!NG/meetings.csv" $zoom_data_url
+        echo $zoom_data >> "zoom_data.json"
+        echo
     fi
 }
-csv_url="https://raw.githubusercontent.com/AkshatChauhan18/Zooming/main/fnc/meetings.csv"
-zoom_data_url="https://raw.githubusercontent.com/AkshatChauhan18/Zooming/main/fnc/zoom_data.json"
+csv_data="Topic,Time Zone,Start Time,Password,Agenda,Duration"
+zoom_data='
+{
+    "KEY": "your key",
+    "SECRET": "your secrete",
+    "settings": {
+      "host_video": "true",
+      "participant_video": "true",
+      "join_before_host": "false",
+      "mute_upon_entry": "false",
+      "audio": "voip",
+      "auto_recording": "false",
+      "waiting_room": "true"
+    }
+}
+'
 zoom_script_url="https://raw.githubusercontent.com/AkshatChauhan18/Zooming/main/dist/zooming0-0-1.py"
 
 echo "
