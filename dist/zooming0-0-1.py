@@ -1,4 +1,4 @@
-#!/user/bin/env python3
+#!/usr/bin/env python3
 
 """
 ZOOM!NG is used for scheduling zoom meetings from terminal >_ .
