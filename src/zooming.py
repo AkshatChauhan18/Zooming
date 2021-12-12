@@ -103,7 +103,7 @@ def from_csv():
                     "settings": settings
                     }  
         console.print(f"[green]Scheduling meeting of topic: {topic} [/green][white]")                          
-        scheduleMeeting(meeting_settings)            
+        schedule_meeting(meeting_settings)            
 
 def from_term(args):
     if args.topic:topic = args.topic
