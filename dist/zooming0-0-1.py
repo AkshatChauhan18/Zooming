@@ -43,8 +43,8 @@ default_settings = {"host_video": "true",
                 "waiting_room": "true"
                 }
 
-def scheduleMeeting(meetingsettings):
-        headers = {'authorization': f'Bearer {generateToken()}',
+def schedule_meeting(meetingsettings):
+        headers = {'authorization': f'Bearer {generate_web_token()}',
                 'content-type': 'application/json'}
         try:       
             r = requests.post(
@@ -70,7 +70,7 @@ def scheduleMeeting(meetingsettings):
             print(e) 
             print()   
 
-def generateToken():
+def generate_web_token():
         token = jwt.encode(
             {'iss': KEY, 'exp': time() + 5000},
             SECRET,
@@ -103,7 +103,7 @@ def from_csv():
                     "settings": settings
                     }  
         console.print(f"[green]Scheduling meeting of topic: {topic} [/green][white]")                          
-        scheduleMeeting(meeting_settings)            
+        schedule_meeting(meeting_settings)            
 
 def from_term(args):
     if args.topic:topic = args.topic
@@ -135,7 +135,7 @@ def from_term(args):
     
     
     console.print(f"[green]Scheduling meeting of topic: {topic} [/green][white]")
-    scheduleMeeting(meeting_settings)
+    schedule_meeting(meeting_settings)
 
 def main(args):
     print("""
