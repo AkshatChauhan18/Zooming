@@ -1,1 +1,0 @@
-### This folder contains files which will be created during installation using .ps1, .sh, installer.py or windows installer.
