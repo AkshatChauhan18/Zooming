@@ -4,14 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-colorama = "*"
-argparse = "*"
-requests = "*"
-pyinstaller = "*"
-pyjwt = "*"
 rich = "*"
+requests = "*"
+pyjwt = "*"
 
 [dev-packages]
-
-[requires]
-python_version = "3.9"
