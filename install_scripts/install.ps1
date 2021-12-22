@@ -1,9 +1,11 @@
 # This is install script of ZOOM!NG 
 # Made by Akshat Chauhan
 
+#Requires -RunAsAdministrator
+
 $exe_file_path = "$env:USERPROFILE/AppData/Local/Programs/zooming"
 $zooming_folder = "$env:USERPROFILE/.ZOOM!NG"
-$zoom_script_url = "https://raw.githubusercontent.com/AkshatChauhan18/Zooming/main/dist/zooming0-0-1.zip"
+$zoom_script_url = "https://raw.githubusercontent.com/AkshatChauhan18/Zooming/main/dist/zooming0-0-1.exe"
 $zoom_data_json_text = @'
 {
     "KEY": "your key",
@@ -48,25 +50,21 @@ function main {
     else {
         Remove-Item "$exe_file_path/*"
     }
-    Write-Host "Downloading zooming.zip"
-    Start-BitsTransfer -Source $zoom_script_url -Destination "$env:USERPROFILE/AppData/Local/Programs/zooming/zooming.zip"
-    Write-Host "Extracting zooming.zip"
-    Expand-Archive -LiteralPath "$env:USERPROFILE/AppData/Local/Programs/zooming/zooming.zip" -DestinationPath "$env:USERPROFILE/AppData/Local/Programs/zooming/"
-    Write-Host "Deleting zip"
-    Remove-Item "$exe_file_path/zooming.zip"
+    Write-Host "Downloading zooming.exe"
+    Start-BitsTransfer -Source $zoom_script_url -Destination "$env:USERPROFILE/AppData/Local/Programs/zooming/zooming.exe"
     Write-Host "Adding to path."
     [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE/AppData/Local/Programs/zooming/", "Machine")
 }
 function check_zooming_folder {
     if (Test-Path -Path $zooming_folder) {
         $answer = Read-Host "$zooming_folder exists, do you want to delete all data and make new settings.json and meetings.csv [yes/no]"
-        if ($answer -eq "yes") {
+        if ($answer -eq "y") {
             Write-Host "Removing all files from .ZOOM!NG folder"
             Remove-Item  "$zooming_folder/*"
             Write-Host
             create_files
         }
-        elseif ($answer -eq "no") {
+        elseif ($answer -eq "n") {
             Write-Host "OK!"
         }
         else {
