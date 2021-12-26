@@ -57,7 +57,7 @@ function main {
 }
 function check_zooming_folder {
     if (Test-Path -Path $zooming_folder) {
-        $answer = Read-Host "$zooming_folder exists, do you want to delete all data and make new settings.json and meetings.csv [yes/no]"
+        $answer = Read-Host "$zooming_folder exists, do you want to delete all data and make new settings.json and meetings.csv [y/n]"
         if ($answer -eq "y") {
             Write-Host "Removing all files from .ZOOM!NG folder"
             Remove-Item  "$zooming_folder/*"
